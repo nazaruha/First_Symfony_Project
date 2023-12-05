@@ -2,18 +2,32 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response; // for http responses
 use Symfony\Component\Routing\Annotation\Route; // for route attributes
 use function Symfony\Component\String\u; // for u
 
 // for routes attributes
 
-class VinylController
+class VinylController extends AbstractController // this parent class gives us a shortcut methods
 {
     #[Route('/')]
     public function index() : Response // return type
     {
-        return new Response("Title: PB and Jams");
+        $tracks = [ // array of tracks
+            ["song" => "Gangsta\'s Paradise", "artist" => "Coolio"],
+            ["song" => "Waterfalls", "artist" => "TLC"],
+            ["song" => "Creep", "artist" => "Radiohead"],
+            ["song" => "Kiss from a Rose", "artist" => "Seal"],
+            ["song" => "On Bended Knee", "artist" => "Boyz II Men"],
+            ["song" => "Fantasy", "artist" => "Mariah Carey"]
+        ];
+
+        return $this->render('vinyl/index.html.twig', [
+            /*variables that we want to pass into the template*/
+            "title" => "PB & Jams",
+            "tracks" => $tracks,
+        ]);
     }
 
     #[Route("/browse/{genre}/{author}")]

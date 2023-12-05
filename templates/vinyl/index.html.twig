@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %} {# inheritance parent html file for html structure #}
+{# As soon as you extend another template, you must surround all of your content in one or more blocks.
+   Otherwise, Twig yells: #}
+
+{% block title %}Create a new Record | {{ parent() }}{% endblock %} {# {{ parent() }} -> add the title's block data from the parent #}
+
+{% block body %} {# We tell Twig where to put it by placing all content inside of a block. #}
+<h1>{{ title }}</h1> {# get the access of the variable which we passed to this template inside controller's method. Converts into string #}
+
+{# TODO: add an image of the recod #} {# comment #}
+
+<div>
+    Tracks
+
+    <ul>
+        {% for index, track in tracks %}
+            <li>#{{ index }}) {{ track.song }} - {{ track.artist|upper }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
+
+{# {{ 'saySomething' }} <!-- just prints string --> #}
+{# {{ someFunction() }} <!-- calls the function --> #}
