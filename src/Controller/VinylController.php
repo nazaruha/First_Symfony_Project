@@ -22,6 +22,10 @@ class VinylController extends AbstractController // this parent class gives us a
             ["song" => "On Bended Knee", "artist" => "Boyz II Men"],
             ["song" => "Fantasy", "artist" => "Mariah Carey"]
         ];
+        // Dump and Die -> dd
+        //dd($tracks); // get the variable's value on the webpage. LIKE DEBUGGING (need 'debug' recipe)
+        dump($tracks);
+        //dump(); // ERROR. Only works in Twig files to output all vars that were passed
 
         return $this->render('vinyl/index.html.twig', [
             /*variables that we want to pass into the template*/
