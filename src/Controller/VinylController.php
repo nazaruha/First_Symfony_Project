@@ -11,7 +11,7 @@ use function Symfony\Component\String\u; // for u
 
 class VinylController extends AbstractController // this parent class gives us a shortcut methods
 {
-    #[Route('/')]
+    #[Route('/', name: "app_homepage")]
     public function index() : Response // return type
     {
         $tracks = [ // array of tracks
@@ -27,26 +27,31 @@ class VinylController extends AbstractController // this parent class gives us a
         dump($tracks);
         //dump(); // ERROR. Only works in Twig files to output all vars that were passed
 
-        return $this->render('vinyl/index.html.twig', [
+        return $this->render('vinyl/index.html.twig' /*searches path in the /templates dir*/, [
             /*variables that we want to pass into the template*/
             "title" => "PB & Jams",
             "tracks" => $tracks,
         ]);
     }
 
-    #[Route("/browse/{genre}/{author}")]
-    public function browse(string $author = null, string $genre = null) : Response // all the types are not necessary but code looks clearer
+    #[Route("/browse/{genre}/{author}", name:'app_browse')]
+    public function browse(string $author = null, string $genre = null) : Response // all the types are not necessary but code looks clearer. And their order is not necessary
     {
-        if (isset($genre) && isset($author))
-        {
-            $title = 'Genre: ' . u(str_replace('-', ' ', $genre))->title(true); // str_replace -> replace '-' into ' ', title(true) -> capitalize first letters of each word
-            $title = $title . "<br/>Author: $author";
-        }
-        else
-        {
-            $title = "All Genres";
-        }
-        return new Response($title);
+//        if (isset($genre) && isset($author))
+//        {
+//            $title = 'Genre: ' . u(str_replace('-', ' ', $genre))->title(true); // str_replace -> replace '-' into ' ', title(true) -> capitalize first letters of each word
+//            $title = $title . "<br/>Author: $author";
+//        }
+//        else
+//        {
+//            $title = "All Genres";
+//        }
+//        return new Response($title);
+
+        $genre = $genre ? u(str_replace('-', ' ', $genre))->title(true) : null;
+        return $this->render("vinyl/browse.html.twig", [
+            "genre" => $genre,
+        ]);
     }
 
 }
