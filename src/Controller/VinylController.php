@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response; // for http responses
 use Symfony\Component\Routing\Annotation\Route; // for route attributes
+use Twig\Environment;
 use function Symfony\Component\String\u; // for u
 
 // for routes attributes
@@ -12,7 +13,7 @@ use function Symfony\Component\String\u; // for u
 class VinylController extends AbstractController // this parent class gives us a shortcut methods
 {
     #[Route('/', name: "app_homepage")]
-    public function index() : Response // return type
+    public function index(Environment $twig) : Response // return type
     {
         $tracks = [ // array of tracks
             ["song" => "Gangsta\'s Paradise", "artist" => "Coolio"],
@@ -27,11 +28,13 @@ class VinylController extends AbstractController // this parent class gives us a
         dump($tracks);
         //dump(); // ERROR. Only works in Twig files to output all vars that were passed
 
-        return $this->render('vinyl/index.html.twig' /*searches path in the /templates dir*/, [
+        $html = $twig->render('vinyl/index.html.twig' /*searches path in the /templates dir*/, [
             /*variables that we want to pass into the template*/
             "title" => "PB & Jams",
             "tracks" => $tracks,
         ]);
+
+        return new Response($html);
     }
 
     #[Route("/browse/{genre}/{author}", name:'app_browse')]
