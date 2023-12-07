@@ -12,7 +12,7 @@ use function Symfony\Component\String\u; // for u
 
 class VinylController extends AbstractController // this parent class gives us a shortcut methods
 {
-    #[Route('/', name: "app_homepage")]
+    #[Route('/', name: "app_homepage", methods: ['GET'])]
     public function index(Environment $twig) : Response // return type
     {
         $tracks = [ // array of tracks
@@ -37,7 +37,7 @@ class VinylController extends AbstractController // this parent class gives us a
         return new Response($html);
     }
 
-    #[Route("/browse/{genre}/{author}", name:'app_browse')]
+    #[Route("/browse/{genre}/{author}", name:'app_browse', methods: ['GET'])]
     public function browse(string $author = null, string $genre = null) : Response // all the types are not necessary but code looks clearer. And their order is not necessary
     {
 //        if (isset($genre) && isset($author))
